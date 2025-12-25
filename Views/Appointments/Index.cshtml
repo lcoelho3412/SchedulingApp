@@ -1,0 +1,17 @@
+@model List<SchedulingApp.Models.Appointment>
+
+<h2>Appointments</h2>
+
+<a asp-action="Create">Create New Appointment</a>
+<br /><br />
+
+
+<ul>
+  @foreach (var appointment in Model)
+  {
+    <li>
+      <strong>@appointment.Title</strong><br />
+      @appointment.ClientName — @appointment.Date.ToShortDateString()
+    </li>
+  }
+</ul>

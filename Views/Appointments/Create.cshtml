@@ -1,0 +1,31 @@
+@model SchedulingApp.Models.Appointment
+
+<h2>Create Appointment</h2>
+
+<form asp-action="Create" method="post">
+  <div asp-validation-summary="All" style="color:red;"></div>
+
+  <div>
+    <label asp-for="Title"></label><br />
+    <input asp-for="Title" />
+    <span asp-validation-for="Title" style="color:red;"></span>
+  </div>
+
+  <div>
+    <label asp-for="ClientName"></label><br />
+    <input asp-for="ClientName" />
+    <span asp-validation-for="ClientName" style="color:red;"></span>
+  </div>
+
+  <div>
+    <label asp-for="Date"></label><br />
+    <input asp-for="Date" type="date" />
+    <span asp-validation-for="Date" style="color:red;"></span>
+  </div>
+
+  <br />
+  <button type="submit">Save</button>
+</form>
+@section Scripts {
+  <partial name="_ValidationScriptsPartial" />
+}
