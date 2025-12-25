@@ -15,9 +15,29 @@ namespace SchedulingApp.Controllers
 
     public IActionResult Index()
     {
-      var appointments = _context.Appointments.ToList();
-      return View(appointments);
+      var today = DateTime.Today;
+
+      // Get Monday of current week
+      int diff = (7 + (today.DayOfWeek - DayOfWeek.Monday)) % 7;
+      var weekStart = today.AddDays(-diff);
+      var weekEnd = weekStart.AddDays(5);
+
+      var model = new WeeklyAgendaViewModel
+      {
+        WeekStart = weekStart,
+        WeekEnd = weekEnd,
+        Days = Enumerable.Range(0, 5)
+              .Select(d => weekStart.AddDays(d))
+              .ToList(),
+        Hours = Enumerable.Range(7, 13).ToList(), // 7 AM → 7 PM
+        Appointments = _context.Appointments
+              .Where(a => a.Date >= weekStart && a.Date < weekEnd.AddDays(1))
+              .ToList()
+      };
+
+      return View(model);
     }
+
 
     public IActionResult Create()
     {

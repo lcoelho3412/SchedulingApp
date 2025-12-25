@@ -1,22 +1,44 @@
-@model List<SchedulingApp.Models.Appointment>
-
-<h2>Appointments</h2>
-
+@model SchedulingApp.Models.WeeklyAgendaViewModel
 <a asp-action="Create">Create New Appointment</a>
-<br /><br />
 
+<h2>Weekly Agenda</h2>
+<h4>@Model.WeekStart.ToString("MMMM yyyy")</h4>
 
-<ul>
-  @foreach (var appointment in Model)
-  {
-    <li>
-      <strong>@appointment.Title</strong><br />
-      @appointment.ClientName — @appointment.Date.ToShortDateString()
-      <br />
-      <a asp-action="Edit" asp-route-id="@appointment.Id">Edit</a>
-      <a asp-action="Delete" asp-route-id="@appointment.Id">Delete</a>
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Time</th>
+            @foreach (var day in Model.Days)
+            {
+                <th>
+                    @day.DayOfWeek<br />
+                    @day.ToString("MM/dd")
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hour in Model.Hours)
+        {
+            <tr>
+                <td>@DateTime.Today.AddHours(hour).ToString("h tt")</td>
 
-    </li>
-  }
+                @foreach (var day in Model.Days)
+                {
+                    var appointment = Model.Appointments.FirstOrDefault(a =>
+                        a.Date.Date == day.Date &&
+                        a.Date.Hour == hour
+                    );
 
-</ul>
+                    <td>
+                        @if (appointment != null)
+                        {
+                            <strong>@appointment.Title</strong><br />
+                            @appointment.ClientName
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
