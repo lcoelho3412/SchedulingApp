@@ -12,6 +12,11 @@
     <li>
       <strong>@appointment.Title</strong><br />
       @appointment.ClientName — @appointment.Date.ToShortDateString()
+      <br />
+      <a asp-action="Edit" asp-route-id="@appointment.Id">Edit</a>
+      <a asp-action="Delete" asp-route-id="@appointment.Id">Delete</a>
+
     </li>
   }
+
 </ul>

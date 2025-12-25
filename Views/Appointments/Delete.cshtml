@@ -1,0 +1,16 @@
+@model SchedulingApp.Models.Appointment
+
+<h2>Delete Appointment</h2>
+
+<p>Are you sure you want to delete this appointment?</p>
+
+<p>
+  <strong>@Model.Title</strong><br />
+  @Model.ClientName — @Model.Date.ToShortDateString()
+</p>
+
+<form asp-action="Delete" method="post">
+  <input type="hidden" asp-for="Id" />
+  <button type="submit">Yes, Delete</button>
+  <a asp-action="Index">Cancel</a>
+</form>
